@@ -30,7 +30,7 @@ def extract_bio(author: str) -> None:
 
     url = urljoin(
         URL,
-        f"author/{author.replace(". ", "-")
+        f"author/{author.replace(". ", "-")  # noqa: E999
                   .replace(" ", "-")
                   .replace(".", "-")
                   .replace("\'", "")
