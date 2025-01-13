@@ -30,12 +30,12 @@ def extract_bio(author: str) -> None:
 
     url = urljoin(
         URL,
-        f"author/{author.replace('. ', '-')  # noqa: E999
-                  .replace(' ', '-')
-                  .replace('.', '-')
-                  .replace('\'', '')
-                  .replace('é', 'e')
-                  .rstrip('-')}/",
+        f"author/{author.replace('. ', '-')
+        .replace(' ', '-')
+        .replace('.', '-')
+        .replace('\'', '')
+        .replace('é', 'e')
+        .rstrip('-')}/"
     )
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
