@@ -9,6 +9,7 @@ URL = "https://quotes.toscrape.com/"
 
 CACHE_OF_AUTHORS = {}
 
+
 @dataclass
 class Quote:
     text: str
@@ -23,18 +24,16 @@ class Bio:
     description: str
 
 
-def extract_bio(author):
+def extract_bio(author: str) -> None:
     if author in CACHE_OF_AUTHORS:
         return
 
-    url = urljoin(URL, f"author/{
-    author.replace(". ", "-")
+    url = urljoin(URL, f"author/"f"{author.replace(". ", "-")
                   .replace(" ", "-")
                   .replace(".", "-")
                   .replace("\'", "")
                   .replace("é", "e")
-                  .rstrip("-")
-    }/")
+                  .rstrip("-")}"f"/")
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
 
@@ -67,6 +66,7 @@ def parse_quotes(page_content: bytes) -> list[Quote]:
     product_tags = soup.select(".quote")
     return [extract_quote(tag) for tag in product_tags]
 
+
 def page_generator(url: str) -> Generator[bytes, None, None]:
     page_num = 1
     while True:
@@ -84,7 +84,8 @@ def scrape_quotes() -> list[Quote]:
         quotes.extend(parse_quotes(page))
     return quotes
 
-def write_to_file(quotes: list[Quote], file_name: str):
+
+def write_to_file(quotes: list[Quote], file_name: str) -> None:
     with open(file_name, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["text", "author", "tags"])
@@ -93,7 +94,10 @@ def write_to_file(quotes: list[Quote], file_name: str):
     with open("authors_bio.csv", "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["author", "birthdate", "description"])
-        writer.writerows([astuple(author) for author in CACHE_OF_AUTHORS.values()])
+        writer.writerows(
+            [astuple(author) for author in CACHE_OF_AUTHORS.values()]
+        )
+
 
 def main(output_csv_path: str) -> None:
     quotes = scrape_quotes()
