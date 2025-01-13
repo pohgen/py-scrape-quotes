@@ -32,13 +32,14 @@ def extract_bio(author):
                   .replace(" ", "-")
                   .replace(".", "-")
                   .replace("\'", "")
+                  .replace("é", "e")
                   .rstrip("-")
     }/")
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
 
     born = soup.select_one("span.author-born-date").text
-    description = soup.select_one("div.author-description").text[:20]
+    description = soup.select_one("div.author-description").text.strip()
 
     bio = Bio(
         author=author,
