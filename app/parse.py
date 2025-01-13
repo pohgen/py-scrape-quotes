@@ -28,12 +28,12 @@ def extract_bio(author: str) -> None:
     if author in CACHE_OF_AUTHORS:
         return
 
-    url = urljoin(URL, f"author/"f"{author.replace(". ", "-")
+    url = urljoin(URL, f"author/{author.replace(". ", "-")
                   .replace(" ", "-")
                   .replace(".", "-")
                   .replace("\'", "")
                   .replace("é", "e")
-                  .rstrip("-")}"f"/")
+                  .rstrip("-")}/")
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
 
